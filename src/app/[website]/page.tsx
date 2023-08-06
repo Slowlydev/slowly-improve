@@ -15,7 +15,7 @@ export default function Feedback({ params }: { params: { website: string } }) {
 
 	useEffect(() => {
 		router.prefetch("/thanks");
-	}, []);
+	}, [router]);
 
 	const submitFeedback = async (e: FormEvent) => {
 		e.preventDefault();
