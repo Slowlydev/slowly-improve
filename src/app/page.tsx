@@ -1,8 +1,4 @@
-import Image from "next/image";
-
 export default function Home() {
-	const website = "f1-dash";
-
 	return (
 		<main className="flex h-screen w-full flex-col justify-center items-center">
 			<h1 className="text-2xl font-bold leading-none mb-1">Feedback Site</h1>

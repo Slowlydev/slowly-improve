@@ -16,8 +16,3 @@ export async function POST(request: NextRequest) {
 
 	return new NextResponse("Success");
 }
-
-// export async function GET(request: NextRequest) {
-// 	const feedbacks = await getFeedbacks();
-// 	return feedbacks;
-// }
