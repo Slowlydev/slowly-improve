@@ -1,5 +1,5 @@
 import { env } from "@/env.mjs";
-import { FeedbackType } from "./feedback";
+import { CreateFeedbackType, FeedbackType } from "./feedback";
 
 const headers = {
 	"Content-Type": "application/json",
@@ -8,11 +8,11 @@ const headers = {
 	Authorization: `Bearer ${env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
 } as HeadersInit | undefined;
 
-export const fetcher = async (method: "POST" | "GET" | "PUT" | "DELETE" | "PATCH", route: string, body: any): Promise<any> => {
+export const fetcher = async (method: "POST" | "GET" | "PUT" | "DELETE" | "PATCH", route: string, body?: any): Promise<any> => {
 	const response = await fetch(`${env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/${route}`, {
 		headers,
 		method,
-		body: JSON.stringify(body),
+		...(body && { body: JSON.stringify(body) }),
 	});
 
 	try {
@@ -23,6 +23,10 @@ export const fetcher = async (method: "POST" | "GET" | "PUT" | "DELETE" | "PATCH
 	}
 };
 
-export const createFeedback = async (feedback: FeedbackType) => {
+export const createFeedback = async (feedback: CreateFeedbackType) => {
 	return fetcher("POST", "feedbacks", feedback);
+};
+
+export const getFeedbacks = async (website?: string): Promise<FeedbackType[]> => {
+	return fetcher("GET", "feedbacks?select=*");
 };

@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { createFeedback } from "../../lib/database";
-import { feedbackSchema } from "../../lib/feedback";
+import { createFeedbackSchema } from "../../lib/feedback";
 
 export async function POST(request: NextRequest) {
 	const body = await request.json();
 
-	const parsedFeedback = feedbackSchema.safeParse(body);
+	const parsedFeedback = createFeedbackSchema.safeParse(body);
 
 	if (!parsedFeedback.success) {
 		return new NextResponse(parsedFeedback.error.toString());
@@ -16,3 +16,8 @@ export async function POST(request: NextRequest) {
 
 	return new NextResponse("Success");
 }
+
+// export async function GET(request: NextRequest) {
+// 	const feedbacks = await getFeedbacks();
+// 	return feedbacks;
+// }
