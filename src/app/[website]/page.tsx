@@ -10,6 +10,7 @@ export default function Feedback({ params }: { params: { website: string } }) {
 
 	const [feature, setFeature] = useState<string>("");
 	const [feedback, setFeedback] = useState<string>("");
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const label = "opacity-70 font-medium mt-4";
 
@@ -19,6 +20,11 @@ export default function Feedback({ params }: { params: { website: string } }) {
 
 	const submitFeedback = async (e: FormEvent) => {
 		e.preventDefault();
+
+		if (loading) return;
+		if (!feedback || !feature) return;
+
+		setLoading(true);
 
 		await fetch("/api", {
 			method: "POST",
@@ -45,6 +51,7 @@ export default function Feedback({ params }: { params: { website: string } }) {
 					onChange={(e) => setFeature(e.target.value)}
 					type="text"
 					className="w-full h-10 rounded-lg bg-zinc-900 p-2 px-4 outline-blue-600 ring-blue-600"
+					disabled={loading}
 				/>
 
 				<p className={label}>Feedback</p>
@@ -53,9 +60,12 @@ export default function Feedback({ params }: { params: { website: string } }) {
 					value={feedback}
 					onChange={(e) => setFeedback(e.target.value)}
 					className="w-full h-32 rounded-lg bg-zinc-900 p-2 px-4 resize-none"
+					disabled={loading}
 				/>
 
-				<button className="w-full rounded-lg bg-blue-600 h-10 mt-4 font-medium">Submit</button>
+				<button className="w-full rounded-lg bg-blue-600 h-10 mt-4 font-medium" disabled={loading}>
+					{loading ? "Loading..." : "Submit"}
+				</button>
 			</form>
 		</main>
 	);

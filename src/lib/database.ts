@@ -13,6 +13,7 @@ export const fetcher = async (method: "POST" | "GET" | "PUT" | "DELETE" | "PATCH
 		headers,
 		method,
 		...(body && { body: JSON.stringify(body) }),
+		cache: "no-store",
 	});
 
 	try {
