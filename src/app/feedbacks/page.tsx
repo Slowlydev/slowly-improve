@@ -12,9 +12,12 @@ export default async function Feedbacks() {
 			<h1 className="text-2xl font-bold leading-none my-4">Feedback Site</h1>
 
 			<div className="flex flex-row gap-2 flex-wrap justify-center">
-				{feedbacks.map((feedback) => (
-					<FeedbackCard key={feedback.id} feedback={feedback} />
-				))}
+				{feedbacks
+					.sort((fa, fb) => new Date(fa.created_at).getMilliseconds() - new Date(fb.created_at).getMilliseconds())
+					.sort((fa, fb) => (fa.done === fb.done ? 0 : fa.done ? -1 : 1))
+					.map((feedback) => (
+						<FeedbackCard key={feedback.id} feedback={feedback} />
+					))}
 			</div>
 		</main>
 	);
